@@ -26,9 +26,10 @@ int f(int n)
 
 int main()
 {
-	//std::cout << Fibonacci(50) << std::endl;
-	std::map<int, int64_t> memo;
+	////std::cout << Fibonacci(50) << std::endl;
+	//std::map<int, int64_t> memo;
 
-	std::cout << Fibonacci_memo(50,memo) << std::endl;
+	//std::cout << Fibonacci_memo(50,memo) << std::endl;
 
+	std::cout << FindWay(2, 3) << std::endl;
 }
