@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <map>
+#include <string>
 //time complexity:
 //space complexity:
 
@@ -53,4 +54,32 @@ int FindWay(int m, int n)
 	}
 	//recursive case
 	return FindWay(m - 1, n) + FindWay(m, n-1);
+}
+
+// tc : 0(n) / 0 (m* n)
+// sc : 0(m+n)
+
+int FindWay(int m, int n, std::map<std::string, int>& memo)
+{
+	std::string key = std::to_string(m) + "," + std::to_string(n);
+		if (memo.count(key) == 1)
+		{
+			return memo[key];
+		}
+
+		std::string rkey = std::to_string(n) + "," + std::to_string(m);
+
+			//base case
+		if (memo.count(rkey) == 1)
+			{
+				return  memo[rkey];
+			}
+
+		if (m == 1 || n == 1)
+		{
+			return 1;
+		}
+		//recursive case
+		return FindWay(m - 1, n) + FindWay(m, n - 1);
+		return[rkey];
 }
