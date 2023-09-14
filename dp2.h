@@ -5,7 +5,6 @@
 #include <memory>
 // Dnamic Programming 개념
 /*
-
  정수의 배열 numbers에서 숫자들을 조합하여 sum이라는 값을 만들어 낼 수 잇는지 확인하는 함수를 만들어보세요.
  제한사항
  - numbers는 양수의 집합니다.
