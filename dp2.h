@@ -107,7 +107,7 @@ bool CanAccumulate(const std::vector<int>& numbers, int sum, std::map<int, bool>
 // brute force
 using result = std::shared_ptr<std::vector<int>>;
 
-result HowAccumulateb(const std::vector<int>& numbers, int sum, std::map<int, result>& memo)
+result HowAccumulatem(const std::vector<int>& numbers, int sum, std::map<int, result>& memo)
 {
 	// base case
 	if (sum == 0)
@@ -122,7 +122,7 @@ result HowAccumulateb(const std::vector<int>& numbers, int sum, std::map<int, re
 	// recursive case
 	for (const auto e : numbers)
 	{
-		auto r = HowAccumulateb(numbers, sum, memo);
+		auto r = HowAccumulatem(numbers, sum, memo);
 		if (r != nullptr)
 		{
 			r->push_back(e);
@@ -136,7 +136,7 @@ result HowAccumulateb(const std::vector<int>& numbers, int sum, std::map<int, re
 
 using result = std::shared_ptr<std::vector<int>>;
 
-result HowAccumulatem(const std::vector<int>& numbers, int sum, std::map<int, result>& memo)
+result HowAccumulate(const std::vector<int>& numbers, int sum, std::map<int, result>& memo)
 {
 	if (memo.count(sum) == 1)
 	{
@@ -156,7 +156,7 @@ result HowAccumulatem(const std::vector<int>& numbers, int sum, std::map<int, re
 	// recursive case
 	for (const auto e : numbers)
 	{
-		auto r = HowAccumulatem(numbers, sum - e, memo);
+		auto r = HowAccumulate(numbers, sum - e, memo);
 		if (r != nullptr)
 		{
 			r->push_back(e);
@@ -166,4 +166,160 @@ result HowAccumulatem(const std::vector<int>& numbers, int sum, std::map<int, re
 	}
 	memo[sum] = nullptr;
 	return memo[sum];
+}
+
+// 최소의 크기 : m = sum, n = numbers의 크기
+// Tc:  0(m* n)
+// // std::copy 시간 고려 0(m^2 * n)
+// Sc : 0(m^2)
+result OptimizeAccumualte(const std::vector<int>& numbers, int sum, std::map<int, result>& memo)
+{
+	if (memo.count(sum) == 1)
+	{
+		return memo[sum];
+	}
+	// base case
+	if (sum == 0)
+	{
+		return std::make_shared<std::vector<int>>();
+	}
+
+	if (sum<0)
+	{
+		return nullptr;
+	}
+
+	// recursive case
+	std::shared_ptr < std::vector<int>> optimized = nullptr; 
+	for (const auto e :numbers)
+	{
+		auto r = OptimizeAccumualte(numbers, sum - e, memo);
+		if (r != nullptr)
+		{
+			std::shared_ptr<std::vector<int>> v = std::make_shared<std::vector<int>>();
+			v->resize(r->size());
+			std::copy(r->begin(), r->end(), v->begin());
+			r->push_back(e);
+			if (optimized == nullptr|| v->size() < optimized->size())
+			{
+				optimized = v;
+			}
+		}
+	}
+	memo[sum] = optimized;
+	return memo[sum];
+}
+
+
+// Tc:  0(n^m * m)
+// Sc : 0(m)
+bool CanGenerate(std::vector<std::string>& strings, std::string target)
+{
+
+	//base case
+	if (target == "")
+	{
+		return true;
+	}
+	
+	//recursive
+	for (auto e : strings)
+	{
+		if (target.find(e) == 0)
+		{
+			auto subStr = target.substr(e.size());
+			if (CanGenerate(strings, subStr))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+// Tc:  0(n^m * m)
+// Sc : 0(m^2)
+
+bool CanGenerate(const std::vector<std::string>& strings, std::string target,
+	std::map<std::string, bool>& memo)
+
+{
+
+	if (memo.count(target) == 1)
+	{
+		return memo[target];
+	}
+
+	//base case
+	if (target == "")
+	{
+		return true;
+	}
+
+
+	//recursive
+	for (auto e : strings)
+	{
+		if (target.find(e) == 0)
+		{
+			auto subStr = target.substr(e.size());
+			if (CanGenerate(strings, subStr))
+			{
+				return true;
+			}
+		}
+	}
+	memo[target] = false;
+	return memo[target];
+}
+
+//combination -brute force
+// Tc:  0(n^m * m)
+// Sc : 0(m^2)
+int HowManyGenerate(const std::vector<std::string>& strings, std::string target)
+{
+	//base case
+	if (target == "")
+	{
+		return 1;
+	}
+
+	int count{};
+	for (auto e : strings)
+	{
+		if (target.find(e) == 0)
+		{
+			count += HowManyGenerate(strings, target.substr(e.size()));
+		}
+	}
+
+	return count;
+}
+
+//combination - memoization
+// Tc:  0(n^m * m)
+// Sc : 0(m^2)
+int HowManyGenerate(const std::vector<std::string>& strings, std::string target,
+	std::map<std::string, int>& memo)
+{
+	if (memo.count(target) == 1)
+	{
+		return memo[target];
+	}
+	//base case
+	if (target == "")
+	{
+		return 1;
+	}
+
+	int count{};
+	for (auto e : strings)
+	{
+		if (target.find(e) == 0)
+		{
+			count += HowManyGenerate(strings, target.substr(e.size()));
+		}
+	}
+	memo[target] = count;
+	return memo[target];
 }

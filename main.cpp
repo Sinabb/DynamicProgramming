@@ -50,15 +50,7 @@ std::ostream& operator<< (std::ostream& os, std::vector<int>* v)
 
 int main()
 {
-	std::vector<int> numbers1 = { 2,3,5 };
-	int sum1 = 8;
-
-	std::vector<int> numbers2 = { 8,6 };
-	int sum2 = 7;
-
-	std::map<int, result> memo;
-
-	std::cout << HowAccumulatem(numbers1, sum1, memo).get() << std::endl;
+	
 }
 
 //std::cout << Fibonacci(50) << std::endl;
@@ -84,4 +76,16 @@ int main()
 	std::cout << CanAccumulate(numbers1, sum1,memo) << std::endl;
 	memo.clear();
 	std::cout << CanAccumulate(numbers2, sum2, memo) << std::endl;
+*/
+
+/*
+	std::vector<int> numbers1 = { 2,3,5 };
+	int sum1 = 8;
+
+	std::vector<int> numbers2 = { 8,6 };
+	int sum2 = 7;
+
+	std::map<int, result> memo;
+
+	std::cout << HowAccumulatem(numbers1, sum1, memo).get() << std::endl;
 */
