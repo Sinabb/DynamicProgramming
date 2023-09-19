@@ -2,51 +2,7 @@
 #include "dp1.h"
 #include "dp2.h"
 
-/*
-재귀 호출
-트리로 표현하면 이해가 쉬움
-시간 복잡도 : 전체 노드의 갯수
-공간 복잡도 : 트리의 높이
 
-Brute force
-tc : 0(2^n)
-sc : 0(n)
-*/ 
-int f(int n)
-{
-	if (n <= 1)
-	{
-		return 1;
-	}
-
-	f(n - 1);
-	f(n - 1);
-
-	return 0;
-}
-
-std::ostream& operator<< (std::ostream& os, std::vector<int>* v)
-{
-	if (v == nullptr)
-	{
-		std::cout << "nullptr";
-	}
-	else
-	{
-		std::cout << "{";
-		for (int i = 0; i < v->size(); i++)
-		{
-			std::cout << (*v)[i] << ", ";
-
-			if (i < v->size() - 1)
-			{
-				std::cout << ", ";
-			}
-		}
-		std::cout << "}";
-		return os;
-	}
-}
 
 int main()
 {
